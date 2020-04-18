@@ -1,14 +1,43 @@
-import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
-import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-
-import { MonoText } from '../components/StyledText';
+import { StyleSheet, View } from 'react-native';
+import AppButton from '../components/AppButton';
+import Colors from '../constants/Colors';
 
 export default function TimerScreen() {
+
+  const startTimer = () => {
+    console.log('startTimer');
+  }
+
+  const pauseTimer = () => {
+    console.log('pauseTimer');
+  }
+
+  const stopTimer = () => {
+    console.log('stopTimer');
+  }
+
   return (
     <View style={styles.container}>
-      <View style={styles.container} contentContainerStyle={styles.contentContainer}>
-        
+      <View style={styles.timerHolder}>
+
+      </View>
+      <View style={styles.buttonsContainer}>
+        <AppButton
+          text='start'
+          onPress={startTimer}
+          color={Colors.startColor}
+        />
+        <AppButton
+          text='pause'
+          onPress={pauseTimer}
+          color={Colors.pauseColor}
+        />
+        <AppButton
+          text='restart'
+          onPress={stopTimer}
+          color={Colors.stopColor}
+        />
       </View>
     </View>
   );
@@ -23,12 +52,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-  contentContainer: {
-    paddingTop: 30,
+  timerHolder: {
+    flex: 1,
   },
-  welcomeContainer: {
-    alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 20,
+  buttonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });
