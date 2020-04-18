@@ -6,28 +6,23 @@ import Colors from "../constants/Colors";
 export default Timer = () => {
   const [timerCount, setTimerCount] = useState(0);
   const [timerWorks, setTimerWorks] = useState(false);
-  const [intervalId, setIntervalId] = useState(null);
+
+  useEffect(() => {
+    if (timerWorks) {
+      const id = setInterval(inc, 1000);
+      return () => clearInterval(id);
+    }
+  }, [timerWorks]);
 
   const inc = () => {
     setTimerCount((timerCount) => timerCount + 1);
   };
 
-  const startTimer = () => {
-    setIntervalId(setInterval(inc, 1000));
-    setTimerWorks(true);
-  };
-
-  const pauseTimer = () => {
-    clearInterval(intervalId);
-    setTimerWorks(false);
-  };
-
   const stopTimer = () => {
-    clearInterval(intervalId);
     setTimerCount(0);
     setTimerWorks(false);
   };
-  
+
   return (
     <View style={styles.timer}>
       <View style={styles.timerHolder}>
@@ -37,13 +32,13 @@ export default Timer = () => {
         {!timerWorks ? (
           <AppButton
             text="start"
-            onPress={startTimer}
+            onPress={() => setTimerWorks(true)}
             color={Colors.startColor}
           />
         ) : (
           <AppButton
             text="pause"
-            onPress={pauseTimer}
+            onPress={() => setTimerWorks(false)}
             color={Colors.pauseColor}
           />
         )}
@@ -62,8 +57,8 @@ const styles = StyleSheet.create({
   },
   timerHolder: {
     flexGrow: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   buttonsContainer: {
     flexDirection: "row",
