@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
+
 import AppButton from "./AppButton";
+import Clock from "./Clock";
+
 import Colors from "../constants/Colors";
 
-export default Timer = () => {
-  const [timerCount, setTimerCount] = useState(0);
+export default Timer = ({ breakTime, workTime }) => {
+  const [timerCount, setTimerCount] = useState(workTime * 60 * 1000);
   const [timerWorks, setTimerWorks] = useState(false);
 
   useEffect(() => {
@@ -14,19 +17,25 @@ export default Timer = () => {
     }
   }, [timerWorks]);
 
-  const inc = () => {
-    setTimerCount((timerCount) => timerCount + 1);
+  const stopTimer = () => {
+    setTimerCount(workTime * 60 * 1000);
+    setTimerWorks(false);
   };
 
-  const stopTimer = () => {
-    setTimerCount(0);
-    setTimerWorks(false);
+  const inc = () => {
+    setTimerCount((timerCount) => {
+      if (timerCount >= 1000) {
+        return timerCount - 1000;
+      } else {
+        stopTimer();       
+      }
+    });
   };
 
   return (
     <View style={styles.timer}>
       <View style={styles.timerHolder}>
-        <Text style={styles.timerText}>{timerCount}</Text>
+        <Clock time={timerCount} />
       </View>
       <View style={styles.buttonsContainer}>
         {!timerWorks ? (
@@ -34,15 +43,22 @@ export default Timer = () => {
             text="start"
             onPress={() => setTimerWorks(true)}
             color={Colors.startColor}
+            padding={40}
           />
         ) : (
           <AppButton
             text="pause"
             onPress={() => setTimerWorks(false)}
             color={Colors.pauseColor}
+            padding={40}
           />
         )}
-        <AppButton text="reset" onPress={stopTimer} color={Colors.stopColor} />
+        <AppButton
+          text="reset"
+          onPress={stopTimer}
+          color="transparent"
+          padding={10}
+        />
       </View>
     </View>
   );
@@ -52,16 +68,12 @@ const styles = StyleSheet.create({
   timer: {
     flexGrow: 1,
   },
-  timerText: {
-    fontSize: 150,
-  },
   timerHolder: {
     flexGrow: 1,
     alignItems: "center",
     justifyContent: "center",
   },
   buttonsContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    alignItems: 'center'
   },
 });

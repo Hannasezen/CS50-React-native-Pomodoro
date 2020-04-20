@@ -6,7 +6,7 @@ import Colors from "../constants/Colors";
 export default function TimerScreen() {
   return (
     <View style={styles.container}>
-      <Timer />
+      <Timer workTime={0.5} breakTime={0.1} />
     </View>
   );
 }
