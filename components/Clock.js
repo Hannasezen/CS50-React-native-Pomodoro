@@ -15,7 +15,13 @@ export default Clock = ({ time }) => {
   return (
     <View style={styles.timerHolder}>
       <Text style={styles.timerText}>
-        {getMinutes(time)}:{getSeconds(time)}
+        {getMinutes(time)}
+      </Text>
+      <Text style={styles.timerSemicolon}>
+        :
+      </Text>
+      <Text style={styles.timerText}>
+        {getSeconds(time)}
       </Text>
     </View>
   );
@@ -28,6 +34,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   timerText: {
+    fontSize: 100,
+  },
+  timerSemicolon: {
     fontSize: 100,
   },
 });

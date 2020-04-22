@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
-import Timer from "../components/Timer";
-import Colors from "../constants/Colors";
+import PomodoroTimer from "../components/PomodoroTimer";
 
 export default function TimerScreen() {
   return (
     <View style={styles.container}>
-      <Timer workTime={0.5} breakTime={0.1} />
+      <PomodoroTimer />
     </View>
   );
 }
